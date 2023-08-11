@@ -1,4 +1,4 @@
-name: Upload Artifacts to Release
+name: Release
 
 on:
   release:
