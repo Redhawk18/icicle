@@ -7,5 +7,5 @@ edition = "2021"
 
 [dependencies]
 iced = "0.10.0"
-iced_aw = { version = "0.6", default-features = false, features = [] }
+iced_aw = { version = "0.6", default-features = false, features = ["number_input", "selection_list"] }
 inputbot = "0.5.1"
