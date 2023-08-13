@@ -1,9 +1,9 @@
 mod widgets;
-use widgets::number_input::number_input;
-use widgets::selection_list::{Time, options, selection_list};
 use iced::widget::{row, text};
 use iced::{Element, Sandbox};
 use std::time::Duration;
+use widgets::number_input::number_input;
+use widgets::selection_list::{options, selection_list, Time};
 
 pub struct Icicle {
     interval: Duration,
@@ -37,7 +37,6 @@ impl Sandbox for Icicle {
                 self.interval = Duration::new(interval, 0);
             }
             Message::SelectionList((i, text)) => println!("{i} {text}"),
-            
         }
     }
 

@@ -7,5 +7,5 @@ edition = "2021"
 
 [dependencies]
 iced = "0.10.0"
-iced_aw = { version = "0.6", default-features = false, features = ["number_input", "selection_list"] }
+iced_aw = { git = "https://github.com/Redhawk18/iced_aw.git", default-features = false, features = ["number_input", "selection_list"] }
 inputbot = "0.5.1"
