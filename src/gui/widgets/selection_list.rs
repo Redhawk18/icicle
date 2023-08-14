@@ -3,21 +3,8 @@ use crate::gui::Message;
 use iced::Length;
 use iced_aw::SelectionList;
 
-pub fn selection_list<'a>() -> SelectionList<'a, String, Message> {
-    let myvec = vec![
-        "Hours",
-        "Minutes",
-        "Seconds",
-        "Milliseconds",
-        "Mircoseconds",
-        "Nanoseconds",
-    ];
-    let myvec2 = vec![
-        String::from("val1"),
-        String::from("val2"),
-        String::from("val3"),
-    ];
-    SelectionList::new(myvec2, Message::SelectionList)
+pub fn selection_list<'a>() -> SelectionList<'a, Time, Message> {
+    SelectionList::new(&[Time::Hours, Time::Minutes], Message::SelectionList)
         .height(Length::Fixed(50.0))
         .width(Length::Fixed(90.0))
 }
@@ -33,24 +20,19 @@ pub enum Time {
     Nanoseconds,
 }
 
-impl Time {
-    const ALL: [Time; 6] = [
-        Time::Hours,
-        Time::Minutes,
-        Time::Seconds,
-        Time::Milliseconds,
-        Time::Mircoseconds,
-        Time::Nanoseconds,
-    ];
-}
-
-pub fn options() -> Vec<&'static str> {
-    vec![
-        "Hours",
-        "Minutes",
-        "Seconds",
-        "Milliseconds",
-        "Mircoseconds",
-        "Nanoseconds",
-    ]
+impl std::fmt::Display for Time {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Time::Hours => "Hours",
+                Time::Minutes => "Minutes",
+                Time::Seconds => "Seconds",
+                Time::Milliseconds => "Milliaseconds",
+                Time::Mircoseconds => "Mircoseconds",
+                Time::Nanoseconds => "Nanoseconds",
+            }
+        )
+    }
 }

@@ -3,10 +3,11 @@ use iced::widget::{row, text};
 use iced::{Element, Sandbox};
 use std::time::Duration;
 use widgets::number_input::number_input;
-use widgets::selection_list::{options, selection_list, Time};
+use widgets::selection_list::{selection_list, Time};
 
 pub struct Icicle {
     interval: Duration,
+    unit: Time,
 }
 
 #[derive(Debug, Clone)]
@@ -15,7 +16,7 @@ pub enum Message {
     NumberInput(u64),
 
     //selection list
-    SelectionList((usize, String)),
+    SelectionList(usize, Time),
 }
 
 impl Sandbox for Icicle {
@@ -24,6 +25,7 @@ impl Sandbox for Icicle {
     fn new() -> Self {
         Self {
             interval: Duration::default(),
+            unit: Time::default(),
         }
     }
 
@@ -36,7 +38,7 @@ impl Sandbox for Icicle {
             Message::NumberInput(interval) => {
                 self.interval = Duration::new(interval, 0);
             }
-            Message::SelectionList((i, text)) => println!("{i} {text}"),
+            Message::SelectionList(i, text) => println!("{i} {text}"),
         }
     }
 
