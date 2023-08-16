@@ -1,12 +1,13 @@
 mod widgets;
-use iced::widget::{row, text};
+use iced::widget::{button, column, row, text};
 use iced::{Element, Sandbox};
 use std::time::Duration;
 use widgets::number_input::number_input;
 use widgets::selection_list::{selection_list, Time};
 
 pub struct Icicle {
-    interval: Duration,
+    duration: Duration,
+    interval: u64,
     unit: Time,
 }
 
@@ -17,6 +18,8 @@ pub enum Message {
 
     //selection list
     SelectionList(usize, Time),
+
+    Submit,
 }
 
 impl Sandbox for Icicle {
@@ -24,7 +27,8 @@ impl Sandbox for Icicle {
 
     fn new() -> Self {
         Self {
-            interval: Duration::default(),
+            duration: Duration::default(),
+            interval: 0,
             unit: Time::default(),
         }
     }
@@ -35,18 +39,29 @@ impl Sandbox for Icicle {
 
     fn update(&mut self, message: Message) {
         match message {
-            Message::NumberInput(interval) => {
-                self.interval = Duration::new(interval, 0);
-            }
-            Message::SelectionList(i, text) => println!("{i} {text}"),
+            Message::Submit => match self.unit {
+                Time::Minutes => self.duration = Duration::from_secs(self.interval * 60),
+                Time::Seconds => self.duration = Duration::from_secs(self.interval),
+                Time::Milliseconds => self.duration = Duration::from_millis(self.interval),
+                Time::Mircoseconds => self.duration = Duration::from_micros(self.interval),
+                Time::Nanoseconds => self.duration = Duration::from_nanos(self.interval),
+            },
+
+            Message::NumberInput(interval) => self.interval = interval,
+
+            Message::SelectionList(_, unit) => self.unit = unit,
         }
     }
 
     fn view(&self) -> Element<Message> {
-        row!(
-            text("Press Interval"),
-            number_input(self.interval),
-            selection_list(),
+        println!("{:#?}", self.duration);
+        column!(
+            row!(
+                text("Press Interval"),
+                number_input(self.interval),
+                selection_list(),
+            ),
+            row!(button("Submit").on_press(Message::Submit))
         )
         .into()
     }
