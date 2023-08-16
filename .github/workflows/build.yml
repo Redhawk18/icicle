@@ -38,13 +38,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # - name:  Install
-      #   run:   |
-      #    if [ "$RUNNER_OS" == "Linux" ]; then
-      #         sudo apt update
-      #         sudo apt install -y 
-      #    fi
-      #   shell: bash
+      - name:  Install
+        run:   |
+         if [ "$RUNNER_OS" == "Linux" ]; then
+              sudo apt install -y librust-libudev-dev
+         fi
+        shell: bash
 
       - uses: Swatinem/rust-cache@v2
 
