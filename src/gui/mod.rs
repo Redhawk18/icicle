@@ -1,12 +1,14 @@
 mod widgets;
-use iced::widget::{column, row, text};
-use iced::{Element, Sandbox};
-use std::time::Duration;
 use widgets::{
     button::button,
     number_input::number_input,
-    selection_list::{selection_time, Time},
+    selection_list::{selection_key, selection_time, Key, Time},
 };
+
+use iced::widget::{column, row, text};
+use iced::{Element, Sandbox};
+use inputbot::KeybdKey;
+use std::time::Duration;
 
 pub struct Icicle {
     duration: Duration,
@@ -16,13 +18,15 @@ pub struct Icicle {
 
 #[derive(Debug, Clone)]
 pub enum Message {
+    //button
+    Submit,
+
     //number input
-    NumberInput(u64),
+    Interval(u64),
 
     //selection list
-    SelectionList(usize, Time),
-
-    Submit,
+    Key(usize, Key),
+    Unit(usize, Time),
 }
 
 impl Sandbox for Icicle {
@@ -50,21 +54,21 @@ impl Sandbox for Icicle {
                 Time::Nanoseconds => self.duration = Duration::from_nanos(self.interval),
             },
 
-            Message::NumberInput(interval) => self.interval = interval,
+            Message::Interval(interval) => self.interval = interval,
 
-            Message::SelectionList(_, unit) => self.unit = unit,
+            Message::Key(_, _) => todo!(),
+            Message::Unit(_, unit) => self.unit = unit,
         }
     }
 
     fn view(&self) -> Element<Message> {
-        println!("{:#?}", self.duration);
-        println!("{}", self.unit);
         column!(
             row!(
                 text("Press Interval"),
                 number_input(self.interval),
                 selection_time(),
             ),
+            row!(selection_key()),
             row!(button())
         )
         .into()
