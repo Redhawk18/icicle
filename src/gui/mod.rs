@@ -5,7 +5,7 @@ use std::time::Duration;
 use widgets::{
     button::button,
     number_input::number_input,
-    selection_list::{selection_list, Time},
+    selection_list::{selection_time, Time},
 };
 
 pub struct Icicle {
@@ -63,7 +63,7 @@ impl Sandbox for Icicle {
             row!(
                 text("Press Interval"),
                 number_input(self.interval),
-                selection_list(),
+                selection_time(),
             ),
             row!(button())
         )
