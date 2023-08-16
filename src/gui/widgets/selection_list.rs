@@ -14,8 +14,8 @@ pub fn selection_list<'a>() -> SelectionList<'a, Time, Message> {
         ],
         Message::SelectionList,
     )
-    .height(Length::Fixed(50.0))
-    .width(Length::Fixed(90.0))
+    .height(Length::Fixed(120.0))
+    .width(Length::Fixed(100.0))
 }
 
 #[derive(Debug, Clone, Copy, Default, Eq, Hash, PartialEq)]
