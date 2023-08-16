@@ -1,9 +1,12 @@
 mod widgets;
-use iced::widget::{button, column, row, text};
+use iced::widget::{column, row, text};
 use iced::{Element, Sandbox};
 use std::time::Duration;
-use widgets::number_input::number_input;
-use widgets::selection_list::{selection_list, Time};
+use widgets::{
+    button::button,
+    number_input::number_input,
+    selection_list::{selection_list, Time},
+};
 
 pub struct Icicle {
     duration: Duration,
@@ -55,13 +58,14 @@ impl Sandbox for Icicle {
 
     fn view(&self) -> Element<Message> {
         println!("{:#?}", self.duration);
+        println!("{}", self.unit);
         column!(
             row!(
                 text("Press Interval"),
                 number_input(self.interval),
                 selection_list(),
             ),
-            row!(button("Submit").on_press(Message::Submit))
+            row!(button())
         )
         .into()
     }
