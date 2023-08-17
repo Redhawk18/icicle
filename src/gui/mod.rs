@@ -56,7 +56,7 @@ impl Sandbox for Icicle {
 
             Message::Interval(interval) => self.interval = interval,
 
-            Message::Key(_, key) => println!("{key} "),
+            Message::Key(_, key) => println!("{key}  "),
             Message::Unit(_, unit) => self.unit = unit,
         }
     }
