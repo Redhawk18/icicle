@@ -37,7 +37,7 @@ jobs:
         run:   |
          if [ "$RUNNER_OS" == "Linux" ]; then
               sudo apt update
-              sudo apt install -y librust-libudev-dev libxtst-dev ld10k1
+              sudo apt install -y libinput-dev librust-libudev-dev libxtst-dev
          fi
         shell: bash
 
