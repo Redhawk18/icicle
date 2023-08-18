@@ -76,12 +76,14 @@ impl Sandbox for Icicle {
     fn view(&self) -> Element<Message> {
         column!(
             // row!(
-            text("Bind key"),
-            selection_key(),
+            row!(text("Bind key"), text("Input key"),
+           ),
+            row!( selection_key(),
+            selection_key(),),
             // ),
             // row!(selection_key()),
             // row!(button())
-            row!(radio(self.input, self.interval))
+            row!(radio(self.input, self.interval)),
         )
         .into()
     }

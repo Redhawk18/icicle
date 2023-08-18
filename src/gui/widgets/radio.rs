@@ -35,7 +35,6 @@ fn body(input: Input, interval: u64) -> Element<'static, Message> {
             text("Time"),
             number_input(interval)),
             selection_time(),
-            column!(text("Input Key"), selection_key())
         )
         .into(),
         Input::Sequence => row!(column!(
