@@ -16,18 +16,21 @@
         with pkgs;
         {
           devShells.default = mkShell {
-            buildInputs = [ 
-              rust-bin.stable.latest.default 
-              expat 
-              fontconfig 
-              freetype 
-              freetype.dev 
-              libGL 
-              pkgconfig 
-              xorg.libX11 
-              xorg.libXcursor 
-              xorg.libXi 
+            buildInputs = [
+              expat
+              fontconfig
+              freetype
+              freetype.dev
+              libGL
+              libinput
+              pkgconfig
+              rust-bin.stable.latest.default
+              udev
+              xorg.libX11
+              xorg.libXcursor
+              xorg.libXi
               xorg.libXrandr
+              xorg.libXtst
               ];
           };
         }

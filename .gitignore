@@ -18,5 +18,8 @@ Cargo.lock
 
 /target
 
+# Nix lock
+flake.lock
+
 # editors
 .vscode
