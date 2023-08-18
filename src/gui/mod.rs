@@ -2,6 +2,7 @@ mod widgets;
 use widgets::{
     button::button,
     number_input::number_input,
+    radio::{radio, Input},
     selection_list::{selection_key, selection_time, Key, Time},
 };
 
@@ -12,6 +13,7 @@ use std::time::Duration;
 
 pub struct Icicle {
     duration: Duration,
+    input: Input,
     interval: u64,
     unit: Time,
 }
@@ -27,6 +29,9 @@ pub enum Message {
     //selection list
     Key(usize, Key),
     Unit(usize, Time),
+
+    //radio
+    Input(Input),
 }
 
 impl Sandbox for Icicle {
@@ -35,6 +40,7 @@ impl Sandbox for Icicle {
     fn new() -> Self {
         Self {
             duration: Duration::default(),
+            input: Input::Hold, //todo impl default
             interval: 0,
             unit: Time::default(),
         }
@@ -58,18 +64,24 @@ impl Sandbox for Icicle {
 
             Message::Key(_, key) => println!("{key}   "),
             Message::Unit(_, unit) => self.unit = unit,
+
+            Message::Input(input) => match input {
+                Input::Hold => self.input = input,
+                Input::Press => self.input = input,
+                Input::Sequence => self.input = input,
+            },
         }
     }
 
     fn view(&self) -> Element<Message> {
         column!(
-            row!(
-                text("Press Interval"),
-                number_input(self.interval),
-                selection_time(),
-            ),
-            row!(selection_key()),
-            row!(button())
+            // row!(
+            text("Bind key"),
+            selection_key(),
+            // ),
+            // row!(selection_key()),
+            // row!(button())
+            row!(radio(self.input, self.interval))
         )
         .into()
     }
