@@ -2,7 +2,7 @@ mod widgets;
 use widgets::{
     button::button,
     number_input::number_input,
-    selection_list::{selection_key, selection_time, Key, Time},
+    selection_list::{selection_input, selection_time, Key, Time},
     tabs::{tabs, Input},
 };
 
