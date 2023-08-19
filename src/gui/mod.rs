@@ -2,8 +2,8 @@ mod widgets;
 use widgets::{
     button::button,
     number_input::number_input,
-    radio::{radio, Input},
     selection_list::{selection_key, selection_time, Key, Time},
+    tabs::{tabs, Input},
 };
 
 use iced::widget::{column, row, text};
@@ -30,7 +30,7 @@ pub enum Message {
     Key(usize, Key),
     Unit(usize, Time),
 
-    //radio
+    //tabs
     Input(Input),
 }
 
@@ -75,15 +75,9 @@ impl Sandbox for Icicle {
 
     fn view(&self) -> Element<Message> {
         column!(
-            // row!(
-            row!(text("Bind key"), text("Input key"),
-           ),
-            row!( selection_key(),
-            selection_key(),),
-            // ),
-            // row!(selection_key()),
-            // row!(button())
-            row!(radio(self.input, self.interval)),
+            tabs(self.input),
+    
+            button(),
         )
         .into()
     }
