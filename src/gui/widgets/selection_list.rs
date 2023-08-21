@@ -2,7 +2,7 @@ use crate::gui::widgets::number_input::number_input;
 use crate::gui::Message;
 
 use iced::widget::{column, row, text, Column, Row};
-use iced::Length;
+use iced::{Alignment, Length};
 use iced_aw::SelectionList;
 
 pub fn selection_keys() -> Row<'static, Message> {
@@ -425,6 +425,8 @@ pub fn selection_time(interval: u64) -> Row<'static, Message> {
             .width(Length::Fixed(100.0))
         )
     )
+    .align_items(Alignment::Center)
+    .spacing(10.0)
 }
 
 #[derive(Debug, Clone, Copy, Default, Eq, Hash, PartialEq)]

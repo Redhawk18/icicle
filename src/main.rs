@@ -1,8 +1,15 @@
 mod gui;
 use gui::Icicle;
 
-use iced::{Application, Settings};
+use iced::{window, Application, Settings};
 
 fn main() -> iced::Result {
-    Icicle::run(Settings::default())
+    Icicle::run(Settings {
+        id: Some(String::from("Icicle")),
+        window: window::Settings {
+            size: (640, 480),
+            ..Default::default()
+        },
+        ..Default::default()
+    })
 }
