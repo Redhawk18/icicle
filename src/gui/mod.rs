@@ -2,7 +2,7 @@ mod widgets;
 use widgets::{
     button::button,
     selection_list::{Key, Time},
-    tabs::{tabs, Input},
+    tabs::{tabs, Mode},
 };
 
 use iced::widget::column;
@@ -12,9 +12,11 @@ use std::time::Duration;
 
 pub struct Icicle {
     duration: Duration,
-    input: Input,
+    input: Key,
     interval: u64,
+    mode: Mode,
     sequence: String,
+    toggle: Key,
     unit: Time,
 }
 
@@ -27,11 +29,12 @@ pub enum Message {
     Interval(u64),
 
     //selection list
-    Key(usize, Key),
+    KeyInput(usize, Key),
+    KeyToggle(usize, Key),
     Unit(usize, Time),
 
     //tabs
-    Tabs(Input),
+    Tabs(Mode),
 
     //text input
     Sequence(String),
@@ -43,9 +46,11 @@ impl Sandbox for Icicle {
     fn new() -> Self {
         Self {
             duration: Duration::default(),
-            input: Input::Hold, //todo impl default
+            mode: Mode::default(),
+            input: Key::W,
             interval: 0,
             sequence: String::default(),
+            toggle: Key::CapsLock,
             unit: Time::default(),
         }
     }
@@ -66,16 +71,22 @@ impl Sandbox for Icicle {
 
             Message::Interval(interval) => self.interval = interval,
 
-            Message::Key(_, key) => println!("{key}   "),
+            Message::KeyInput(_, key) => self.input = key,
+            Message::KeyToggle(_, key) => self.toggle = key,
             Message::Unit(_, unit) => self.unit = unit,
 
-            Message::Tabs(input) => self.input = input,
+            Message::Tabs(input) => self.mode = input,
 
             Message::Sequence(sequence) => self.sequence = sequence,
         }
     }
 
     fn view(&self) -> Element<Message> {
-        column!(tabs(self.input, self.interval, self.sequence.as_str()), button(),).spacing(30.0).into()
+        column!(
+            tabs(self.mode, self.interval, self.sequence.as_str()),
+            button(),
+        )
+        .spacing(30.0)
+        .into()
     }
 }

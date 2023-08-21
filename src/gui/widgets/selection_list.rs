@@ -12,7 +12,7 @@ pub fn selection_keys() -> Row<'static, Message> {
 fn selection_key_input() -> Column<'static, Message> {
     column!(
         text("Input Key:"),
-        SelectionList::new(KEYS, Message::Key,)
+        SelectionList::new(KEYS, Message::KeyInput)
             .height(Length::Fixed(120.0))
             .width(Length::Fixed(100.0))
     )
@@ -21,7 +21,7 @@ fn selection_key_input() -> Column<'static, Message> {
 fn selection_key_toggle() -> Column<'static, Message> {
     column!(
         text("Toggle Key:"),
-        SelectionList::new(KEYS, Message::Key,)
+        SelectionList::new(KEYS, Message::KeyToggle)
             .height(Length::Fixed(120.0))
             .width(Length::Fixed(100.0))
     )
