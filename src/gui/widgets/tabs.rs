@@ -4,7 +4,7 @@ use crate::gui::widgets::{
 };
 use crate::gui::Message;
 
-use iced::widget::{column, row, text, text_input, Row};
+use iced::widget::{column, text, text_input};
 use iced::Element;
 use iced_aw::{TabLabel, Tabs};
 
@@ -38,24 +38,12 @@ pub enum Input {
 
 fn body(input: Input, interval: u64) -> Element<'static, Message> {
     match input {
-        Input::Hold => selection_keys()
-        .into(),
-        Input::Press => column!(
-            selection_keys(),
-            text("Time"),
-            number_input(interval),
-            selection_time("Unit"),
-        )
-        .into(),
+        Input::Hold => selection_keys().into(),
+        Input::Press => column!(selection_keys(), selection_time(interval)).into(),
         Input::Sequence => column!(
             selection_keys(),
-            text("Time"),
-            number_input(interval),
-            selection_time("Unit"),
-            column!(
-                text("sequence string"),
-                text_input("! equals shift+1", "")
-            )
+            selection_time(interval),
+            column!(text("sequence string"), text_input("! equals shift+1", ""))
         )
         .into(),
     }

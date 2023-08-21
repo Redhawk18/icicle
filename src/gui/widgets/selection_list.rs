@@ -1,11 +1,12 @@
+use crate::gui::widgets::number_input::number_input;
 use crate::gui::Message;
 
-use iced::widget::{column, text, Column, Row, row};
+use iced::widget::{column, row, text, Column, Row};
 use iced::Length;
 use iced_aw::SelectionList;
 
 pub fn selection_keys() -> Row<'static, Message> {
-    row!(selection_key_toggle(), selection_key_input()).padding(20)
+    row!(selection_key_toggle(), selection_key_input()).spacing(15.0)
 }
 
 fn selection_key_input() -> Column<'static, Message> {
@@ -405,21 +406,24 @@ impl std::fmt::Display for Key {
     }
 }
 
-pub fn selection_time(header: &str) -> Column<'static, Message> {
-    column!(
-        text(header),
-        SelectionList::new(
-            &[
-                Time::Minutes,
-                Time::Seconds,
-                Time::Milliseconds,
-                Time::Mircoseconds,
-                Time::Nanoseconds,
-            ],
-            Message::Unit,
+pub fn selection_time(interval: u64) -> Row<'static, Message> {
+    row!(
+        number_input(interval),
+        column!(
+            text("Unit:"),
+            SelectionList::new(
+                &[
+                    Time::Minutes,
+                    Time::Seconds,
+                    Time::Milliseconds,
+                    Time::Mircoseconds,
+                    Time::Nanoseconds,
+                ],
+                Message::Unit,
+            )
+            .height(Length::Fixed(120.0))
+            .width(Length::Fixed(100.0))
         )
-        .height(Length::Fixed(120.0))
-        .width(Length::Fixed(100.0))
     )
 }
 
