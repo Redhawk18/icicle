@@ -14,6 +14,7 @@ pub struct Icicle {
     duration: Duration,
     input: Input,
     interval: u64,
+    sequence: String,
     unit: Time,
 }
 
@@ -31,6 +32,9 @@ pub enum Message {
 
     //tabs
     Tabs(Input),
+
+    //text input
+    Sequence(String),
 }
 
 impl Sandbox for Icicle {
@@ -41,6 +45,7 @@ impl Sandbox for Icicle {
             duration: Duration::default(),
             input: Input::Hold, //todo impl default
             interval: 0,
+            sequence: String::default(),
             unit: Time::default(),
         }
     }
@@ -69,10 +74,12 @@ impl Sandbox for Icicle {
                 Input::Press => self.input = input,
                 Input::Sequence => self.input = input,
             },
+
+            Message::Sequence(sequence) => self.sequence = sequence,
         }
     }
 
     fn view(&self) -> Element<Message> {
-        column!(tabs(self.input, self.interval), button(),).into()
+        column!(tabs(self.input, self.interval, self.sequence.as_str()), button(),).into()
     }
 }
