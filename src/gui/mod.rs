@@ -69,17 +69,13 @@ impl Sandbox for Icicle {
             Message::Key(_, key) => println!("{key}   "),
             Message::Unit(_, unit) => self.unit = unit,
 
-            Message::Tabs(input) => match input {
-                Input::Hold => self.input = input,
-                Input::Press => self.input = input,
-                Input::Sequence => self.input = input,
-            },
+            Message::Tabs(input) => self.input = input,
 
             Message::Sequence(sequence) => self.sequence = sequence,
         }
     }
 
     fn view(&self) -> Element<Message> {
-        column!(tabs(self.input, self.interval, self.sequence.as_str()), button(),).into()
+        column!(tabs(self.input, self.interval, self.sequence.as_str()), button(),).spacing(30.0).into()
     }
 }
