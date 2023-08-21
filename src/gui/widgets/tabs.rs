@@ -1,8 +1,8 @@
-use super::selection_list::selection_time;
+use super::selection_list::{selection_key, selection_time};
+use super::number_input::number_input;
 use crate::gui::Message;
-use crate::gui::{number_input, selection_input};
 
-use iced::widget::{column, row, text, text_input, Column, Radio, Row};
+use iced::widget::{column, row, text, text_input, Column};
 use iced::Element;
 use iced_aw::{TabLabel, Tabs};
 
@@ -41,14 +41,14 @@ fn head(input: Input) -> Tabs<'static, Message, Input> {
 fn body(input: Input, interval: u64) -> Element<'static, Message> {
     match input {
         Input::Hold => row!(
-            column!(text("Bind key"), selection_input()),
-            column!(text("Input key"), selection_input()),
+            column!(text("Bind key"), selection_key()),
+            column!(text("Input key"), selection_key()),
         )
         .into(),
         Input::Press => column!(
             row!(
-                column!(text("Bind key"), selection_input()),
-                column!(text("Input key"), selection_input()),
+                column!(text("Bind key"), selection_key()),
+                column!(text("Input key"), selection_key()),
             ),
             text("Time"),
             number_input(interval),
@@ -57,8 +57,8 @@ fn body(input: Input, interval: u64) -> Element<'static, Message> {
         .into(),
         Input::Sequence => column!(
             row!(
-                column!(text("Bind key"), selection_input()),
-                column!(text("Input key"), selection_input()),
+                column!(text("Bind key"), selection_key()),
+                column!(text("Input key"), selection_key()),
             ),
             text("Time"),
             number_input(interval),

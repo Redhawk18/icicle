@@ -2,7 +2,6 @@ use crate::gui::Message;
 
 use iced::Length;
 use iced_aw::SelectionList;
-use inputbot::KeybdKey;
 
 pub fn selection_time<'a>() -> SelectionList<'a, Time, Message> {
     SelectionList::new(
