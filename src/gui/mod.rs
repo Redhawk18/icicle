@@ -30,7 +30,7 @@ pub enum Message {
     Unit(usize, Time),
 
     //tabs
-    Input(Input),
+    Tabs(Input),
 }
 
 impl Sandbox for Icicle {
@@ -64,7 +64,7 @@ impl Sandbox for Icicle {
             Message::Key(_, key) => println!("{key}   "),
             Message::Unit(_, unit) => self.unit = unit,
 
-            Message::Input(input) => match input {
+            Message::Tabs(input) => match input {
                 Input::Hold => self.input = input,
                 Input::Press => self.input = input,
                 Input::Sequence => self.input = input,
@@ -73,6 +73,6 @@ impl Sandbox for Icicle {
     }
 
     fn view(&self) -> Element<Message> {
-        column!(tabs(self.input), button(),).into()
+        column!(tabs(self.input, self.interval), button(),).into()
     }
 }
