@@ -5,7 +5,7 @@ use widgets::{
     tabs::{tabs, Input},
 };
 
-use iced::widget::{column};
+use iced::widget::column;
 use iced::{Element, Sandbox};
 
 use std::time::Duration;
@@ -73,11 +73,6 @@ impl Sandbox for Icicle {
     }
 
     fn view(&self) -> Element<Message> {
-        column!(
-            tabs(self.input),
-    
-            button(),
-        )
-        .into()
+        column!(tabs(self.input), button(),).into()
     }
 }

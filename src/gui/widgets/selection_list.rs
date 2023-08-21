@@ -1,174 +1,137 @@
 use crate::gui::Message;
 
+use iced::widget::{column, text, Column};
 use iced::Length;
 use iced_aw::SelectionList;
 
-pub fn selection_time<'a>() -> SelectionList<'a, Time, Message> {
-    SelectionList::new(
-        &[
-            Time::Minutes,
-            Time::Seconds,
-            Time::Milliseconds,
-            Time::Mircoseconds,
-            Time::Nanoseconds,
-        ],
-        Message::Unit,
-    )
-    .height(Length::Fixed(120.0))
-    .width(Length::Fixed(100.0))
-}
-
-#[derive(Debug, Clone, Copy, Default, Eq, Hash, PartialEq)]
-pub enum Time {
-    Minutes,
-    #[default]
-    Seconds,
-    Milliseconds,
-    Mircoseconds,
-    Nanoseconds,
-}
-
-impl std::fmt::Display for Time {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{}",
-            match self {
-                Time::Minutes => "Minutes",
-                Time::Seconds => "Seconds",
-                Time::Milliseconds => "Milliaseconds",
-                Time::Mircoseconds => "Mircoseconds",
-                Time::Nanoseconds => "Nanoseconds",
-            }
+pub fn selection_key(header: &str) -> Column<'static, Message> {
+    column!(
+        text(header),
+        SelectionList::new(
+            &[
+                Key::Backspace,
+                Key::Tab,
+                Key::Enter,
+                Key::Escape,
+                Key::Space,
+                Key::PageUp,
+                Key::PageDown,
+                Key::End,
+                Key::Home,
+                Key::Left,
+                Key::Up,
+                Key::Right,
+                Key::Down,
+                Key::Insert,
+                Key::Delete,
+                Key::Numrow0,
+                Key::Numrow1,
+                Key::Numrow2,
+                Key::Numrow3,
+                Key::Numrow4,
+                Key::Numrow5,
+                Key::Numrow6,
+                Key::Numrow7,
+                Key::Numrow8,
+                Key::Numrow9,
+                Key::A,
+                Key::B,
+                Key::C,
+                Key::D,
+                Key::E,
+                Key::F,
+                Key::G,
+                Key::H,
+                Key::I,
+                Key::J,
+                Key::K,
+                Key::L,
+                Key::M,
+                Key::N,
+                Key::O,
+                Key::P,
+                Key::Q,
+                Key::R,
+                Key::S,
+                Key::T,
+                Key::U,
+                Key::V,
+                Key::W,
+                Key::X,
+                Key::Y,
+                Key::Z,
+                Key::LSu,
+                Key::RSu,
+                Key::Numpad0,
+                Key::Numpad1,
+                Key::Numpad2,
+                Key::Numpad3,
+                Key::Numpad4,
+                Key::Numpad5,
+                Key::Numpad6,
+                Key::Numpad7,
+                Key::Numpad8,
+                Key::Numpad9,
+                Key::F1,
+                Key::F2,
+                Key::F3,
+                Key::F4,
+                Key::F5,
+                Key::F6,
+                Key::F7,
+                Key::F8,
+                Key::F9,
+                Key::F10,
+                Key::F11,
+                Key::F12,
+                Key::F13,
+                Key::F14,
+                Key::F15,
+                Key::F16,
+                Key::F17,
+                Key::F18,
+                Key::F19,
+                Key::F20,
+                Key::F21,
+                Key::F22,
+                Key::F23,
+                Key::F24,
+                Key::NumLock,
+                Key::ScrollLock,
+                Key::CapsLock,
+                Key::LShift,
+                Key::RShift,
+                Key::LControl,
+                Key::RControl,
+                Key::LAlt,
+                Key::RAlt,
+                Key::BrowserBack,
+                Key::BrowserForward,
+                Key::BrowserRefresh,
+                Key::VolumeMute,
+                Key::VolumeDown,
+                Key::VolumeUp,
+                Key::MediaNextTrack,
+                Key::MediaPrevTrack,
+                Key::MediaStop,
+                Key::MediaPlayPause,
+                Key::Backquote,
+                Key::Slash,
+                Key::Backslash,
+                Key::Comma,
+                Key::Period,
+                Key::Minus,
+                Key::Quote,
+                Key::Semicolon,
+                Key::LBracket,
+                Key::RBracket,
+                Key::Equal,
+            ],
+            Message::Key,
         )
-    }
-}
-
-pub fn selection_key<'a>() -> SelectionList<'a, Key, Message> {
-    SelectionList::new(
-        &[
-            Key::Backspace,
-            Key::Tab,
-            Key::Enter,
-            Key::Escape,
-            Key::Space,
-            Key::PageUp,
-            Key::PageDown,
-            Key::End,
-            Key::Home,
-            Key::Left,
-            Key::Up,
-            Key::Right,
-            Key::Down,
-            Key::Insert,
-            Key::Delete,
-            Key::Numrow0,
-            Key::Numrow1,
-            Key::Numrow2,
-            Key::Numrow3,
-            Key::Numrow4,
-            Key::Numrow5,
-            Key::Numrow6,
-            Key::Numrow7,
-            Key::Numrow8,
-            Key::Numrow9,
-            Key::A,
-            Key::B,
-            Key::C,
-            Key::D,
-            Key::E,
-            Key::F,
-            Key::G,
-            Key::H,
-            Key::I,
-            Key::J,
-            Key::K,
-            Key::L,
-            Key::M,
-            Key::N,
-            Key::O,
-            Key::P,
-            Key::Q,
-            Key::R,
-            Key::S,
-            Key::T,
-            Key::U,
-            Key::V,
-            Key::W,
-            Key::X,
-            Key::Y,
-            Key::Z,
-            Key::LSu,
-            Key::RSu,
-            Key::Numpad0,
-            Key::Numpad1,
-            Key::Numpad2,
-            Key::Numpad3,
-            Key::Numpad4,
-            Key::Numpad5,
-            Key::Numpad6,
-            Key::Numpad7,
-            Key::Numpad8,
-            Key::Numpad9,
-            Key::F1,
-            Key::F2,
-            Key::F3,
-            Key::F4,
-            Key::F5,
-            Key::F6,
-            Key::F7,
-            Key::F8,
-            Key::F9,
-            Key::F10,
-            Key::F11,
-            Key::F12,
-            Key::F13,
-            Key::F14,
-            Key::F15,
-            Key::F16,
-            Key::F17,
-            Key::F18,
-            Key::F19,
-            Key::F20,
-            Key::F21,
-            Key::F22,
-            Key::F23,
-            Key::F24,
-            Key::NumLock,
-            Key::ScrollLock,
-            Key::CapsLock,
-            Key::LShift,
-            Key::RShift,
-            Key::LControl,
-            Key::RControl,
-            Key::LAlt,
-            Key::RAlt,
-            Key::BrowserBack,
-            Key::BrowserForward,
-            Key::BrowserRefresh,
-            Key::VolumeMute,
-            Key::VolumeDown,
-            Key::VolumeUp,
-            Key::MediaNextTrack,
-            Key::MediaPrevTrack,
-            Key::MediaStop,
-            Key::MediaPlayPause,
-            Key::Backquote,
-            Key::Slash,
-            Key::Backslash,
-            Key::Comma,
-            Key::Period,
-            Key::Minus,
-            Key::Quote,
-            Key::Semicolon,
-            Key::LBracket,
-            Key::RBracket,
-            Key::Equal,
-        ],
-        Message::Key,
+        .height(Length::Fixed(120.0))
+        .width(Length::Fixed(100.0))
     )
-    .height(Length::Fixed(120.0))
-    .width(Length::Fixed(100.0))
 }
 
 #[derive(Debug, Clone, Eq, Hash, PartialEq)]
@@ -349,8 +312,18 @@ impl std::fmt::Display for Key {
                 Key::X => "X",
                 Key::Y => "Y",
                 Key::Z => "Z",
-                Key::LSu => if cfg!(target_family = "windows") {"Left Windows"} else {"Left Super"}
-                Key::RSu => if cfg!(target_family = "windows") {"Right Windows"} else {"Right Super"}
+                Key::LSu =>
+                    if cfg!(target_family = "windows") {
+                        "Left Windows"
+                    } else {
+                        "Left Super"
+                    },
+                Key::RSu =>
+                    if cfg!(target_family = "windows") {
+                        "Right Windows"
+                    } else {
+                        "Right Super"
+                    },
                 Key::Numpad0 => "Numpad 0",
                 Key::Numpad1 => "Numpad 1",
                 Key::Numpad2 => "Numpad 2",
@@ -415,6 +388,50 @@ impl std::fmt::Display for Key {
                 Key::LBracket => "Left Bracket",
                 Key::RBracket => "Right Bracket",
                 Key::Equal => "Equal",
+            }
+        )
+    }
+}
+
+pub fn selection_time(header: &str) -> Column<'static, Message> {
+    column!(
+        text(header),
+        SelectionList::new(
+            &[
+                Time::Minutes,
+                Time::Seconds,
+                Time::Milliseconds,
+                Time::Mircoseconds,
+                Time::Nanoseconds,
+            ],
+            Message::Unit,
+        )
+        .height(Length::Fixed(120.0))
+        .width(Length::Fixed(100.0))
+    )
+}
+
+#[derive(Debug, Clone, Copy, Default, Eq, Hash, PartialEq)]
+pub enum Time {
+    Minutes,
+    #[default]
+    Seconds,
+    Milliseconds,
+    Mircoseconds,
+    Nanoseconds,
+}
+
+impl std::fmt::Display for Time {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Time::Minutes => "Minutes",
+                Time::Seconds => "Seconds",
+                Time::Milliseconds => "Milliaseconds",
+                Time::Mircoseconds => "Mircoseconds",
+                Time::Nanoseconds => "Nanoseconds",
             }
         )
     }
