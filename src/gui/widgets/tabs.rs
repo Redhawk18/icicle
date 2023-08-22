@@ -3,6 +3,7 @@ use crate::gui::widgets::{
     text_input::text_input,
 };
 use crate::gui::Message;
+use crate::types::Mode;
 
 use iced::widget::{column, row};
 use iced::Element;
@@ -26,14 +27,6 @@ pub fn tabs(input: Mode, interval: u64, sequence: &str) -> Tabs<'static, Message
             body(Mode::Sequence, interval, sequence),
         )
         .set_active_tab(&input)
-}
-
-#[derive(Debug, Clone, Copy, Default, Eq, PartialEq)]
-pub enum Mode {
-    #[default]
-    Hold,
-    Press,
-    Sequence,
 }
 
 fn body(input: Mode, interval: u64, sequence: &str) -> Element<'static, Message> {

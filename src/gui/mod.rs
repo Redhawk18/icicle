@@ -1,10 +1,7 @@
 mod widgets;
-use widgets::{
-    button::button,
-    selection_list::{Key, Time},
-    tabs::{tabs, Mode},
-};
 use crate::input::init_input;
+use crate::types::*;
+use widgets::{button::button, tabs::tabs};
 
 use iced::widget::column;
 use iced::{font, Application, Command, Element};
@@ -79,7 +76,7 @@ impl Application for Icicle {
                     Time::Mircoseconds => self.duration = Duration::from_micros(self.interval),
                     Time::Nanoseconds => self.duration = Duration::from_nanos(self.interval),
                 }
-                init_input();
+                std::thread::spawn(init_input);
             }
 
             Message::Interval(interval) => self.interval = interval,
