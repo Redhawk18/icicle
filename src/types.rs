@@ -6,7 +6,7 @@ pub enum Mode {
     Sequence,
 }
 
-#[derive(Debug, Clone, Eq, Hash, PartialEq)]
+#[derive(Debug, Clone, Copy, Eq, Hash, PartialEq)]
 pub enum Key {
     Backspace,
     Tab,

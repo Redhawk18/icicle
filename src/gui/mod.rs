@@ -76,7 +76,13 @@ impl Application for Icicle {
                     Time::Mircoseconds => self.duration = Duration::from_micros(self.interval),
                     Time::Nanoseconds => self.duration = Duration::from_nanos(self.interval),
                 }
-                std::thread::spawn(init_input);
+                init_input(
+                    self.duration,
+                    self.input,
+                    self.mode,
+                    self.sequence.clone(),
+                    self.toggle,
+                );
             }
 
             Message::Interval(interval) => self.interval = interval,
