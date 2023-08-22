@@ -4,10 +4,10 @@ use widgets::{
     selection_list::{Key, Time},
     tabs::{tabs, Mode},
 };
+use crate::input::init_input;
 
 use iced::widget::column;
-use iced::{Element, Sandbox};
-
+use iced::{font, Application, Command, Element};
 use std::time::Duration;
 
 pub struct Icicle {
@@ -22,6 +22,8 @@ pub struct Icicle {
 
 #[derive(Debug, Clone)]
 pub enum Message {
+    FontLoaded(Result<(), font::Error>),
+
     //button
     Submit,
 
@@ -40,34 +42,45 @@ pub enum Message {
     Sequence(String),
 }
 
-impl Sandbox for Icicle {
+impl Application for Icicle {
+    type Executor = iced::executor::Default;
+    type Flags = ();
     type Message = Message;
+    type Theme = iced::Theme;
 
-    fn new() -> Self {
-        Self {
-            duration: Duration::default(),
-            mode: Mode::default(),
-            input: Key::W,
-            interval: 0,
-            sequence: String::default(),
-            toggle: Key::CapsLock,
-            unit: Time::default(),
-        }
+    fn new(_flags: Self::Flags) -> (Self, Command<Self::Message>) {
+        (
+            Self {
+                duration: Duration::default(),
+                mode: Mode::default(),
+                input: Key::W,
+                interval: 0,
+                sequence: String::default(),
+                toggle: Key::CapsLock,
+                unit: Time::default(),
+            },
+            font::load(iced_aw::graphics::icons::ICON_FONT_BYTES).map(Message::FontLoaded),
+        )
     }
 
     fn title(&self) -> String {
         String::from("Icile")
     }
 
-    fn update(&mut self, message: Message) {
+    fn update(&mut self, message: Message) -> iced::Command<Message> {
         match message {
-            Message::Submit => match self.unit {
-                Time::Minutes => self.duration = Duration::from_secs(self.interval * 60),
-                Time::Seconds => self.duration = Duration::from_secs(self.interval),
-                Time::Milliseconds => self.duration = Duration::from_millis(self.interval),
-                Time::Mircoseconds => self.duration = Duration::from_micros(self.interval),
-                Time::Nanoseconds => self.duration = Duration::from_nanos(self.interval),
-            },
+            Message::FontLoaded(_) => {}
+
+            Message::Submit => {
+                match self.unit {
+                    Time::Minutes => self.duration = Duration::from_secs(self.interval * 60),
+                    Time::Seconds => self.duration = Duration::from_secs(self.interval),
+                    Time::Milliseconds => self.duration = Duration::from_millis(self.interval),
+                    Time::Mircoseconds => self.duration = Duration::from_micros(self.interval),
+                    Time::Nanoseconds => self.duration = Duration::from_nanos(self.interval),
+                }
+                init_input();
+            }
 
             Message::Interval(interval) => self.interval = interval,
 
@@ -79,6 +92,7 @@ impl Sandbox for Icicle {
 
             Message::Sequence(sequence) => self.sequence = sequence,
         }
+        Command::none()
     }
 
     fn view(&self) -> Element<Message> {
@@ -88,5 +102,21 @@ impl Sandbox for Icicle {
         )
         .spacing(30.0)
         .into()
+    }
+
+    fn theme(&self) -> Self::Theme {
+        Self::Theme::default()
+    }
+
+    fn style(&self) -> <Self::Theme as iced::application::StyleSheet>::Style {
+        <Self::Theme as iced::application::StyleSheet>::Style::default()
+    }
+
+    fn subscription(&self) -> iced::Subscription<Self::Message> {
+        iced::Subscription::none()
+    }
+
+    fn scale_factor(&self) -> f64 {
+        1.0
     }
 }

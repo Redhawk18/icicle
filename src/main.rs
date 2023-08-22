@@ -1,4 +1,5 @@
 mod gui;
+mod input;
 use gui::Icicle;
 
 use iced::{window, Application, Settings};
