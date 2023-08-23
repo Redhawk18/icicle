@@ -20,12 +20,12 @@ pub fn init_input(
 }
 
 fn hold(input: KeybdKey, toggle: KeybdKey) {
-    println!("{} {}",toggle, input);
     toggle.bind(move || {
         while toggle.is_toggled() {
             input.press();
-            input.release();
+
         }
+        input.release();
     });
 
     handle_input_events();
