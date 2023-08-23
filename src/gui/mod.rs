@@ -1,5 +1,5 @@
 mod widgets;
-use crate::input::start_input;
+use crate::input::{start_input, end_input};
 use crate::types::*;
 use widgets::{button::button, tabs::tabs};
 
@@ -23,7 +23,7 @@ pub enum Message {
     FontLoaded(Result<(), font::Error>),
 
     //button
-    Submit,
+    Start,
     Stop,
 
     //number input
@@ -70,7 +70,7 @@ impl Application for Icicle {
         match message {
             Message::FontLoaded(_) => {}
 
-            Message::Submit => {
+            Message::Start => {
                 match self.unit {
                     Time::Minutes => self.duration = Duration::from_secs(self.interval * 60),
                     Time::Seconds => self.duration = Duration::from_secs(self.interval),
@@ -86,7 +86,7 @@ impl Application for Icicle {
                     self.toggle,
                 );
             }
-            Message::Stop => inputbot::stop_handling_input_events(),
+            Message::Stop => end_input(),
 
             Message::Interval(interval) => self.interval = interval,
 

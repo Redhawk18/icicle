@@ -1,5 +1,3 @@
-use inputbot::KeybdKey;
-
 #[derive(Debug, Clone, Copy, Default, Eq, PartialEq)]
 pub enum Mode {
     #[default]
