@@ -5,15 +5,16 @@ use widgets::{button::button, tabs::tabs};
 
 use iced::widget::column;
 use iced::{font, Application, Command, Element};
+use inputbot::KeybdKey;
 use std::time::Duration;
 
 pub struct Icicle {
     duration: Duration,
-    input: Key,
+    input: KeybdKey,
     interval: u64,
     mode: Mode,
     sequence: String,
-    toggle: Key,
+    toggle: KeybdKey,
     unit: Time,
 }
 
@@ -28,8 +29,8 @@ pub enum Message {
     Interval(u64),
 
     //selection list
-    KeyInput(usize, Key),
-    KeyToggle(usize, Key),
+    KeyInput(usize, KeybdKey),
+    KeyToggle(usize, KeybdKey),
     Unit(usize, Time),
 
     //tabs
@@ -50,10 +51,10 @@ impl Application for Icicle {
             Self {
                 duration: Duration::default(),
                 mode: Mode::default(),
-                input: Key::W,
+                input: KeybdKey::WKey,
                 interval: 0,
                 sequence: String::default(),
-                toggle: Key::CapsLock,
+                toggle: KeybdKey::CapsLockKey,
                 unit: Time::default(),
             },
             font::load(iced_aw::graphics::icons::ICON_FONT_BYTES).map(Message::FontLoaded),

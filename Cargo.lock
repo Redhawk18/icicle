@@ -1095,8 +1095,7 @@ dependencies = [
 [[package]]
 name = "inputbot"
 version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b40cb931b426a20d051b937c45fbc27b794c7637a804640230e495d4e78462af"
+source = "git+https://github.com/obv-mikhail/InputBot?rev=cb4a890#cb4a8900d4e2b2d44b07dfa7b3840db49c41da36"
 dependencies = [
  "input",
  "libc",

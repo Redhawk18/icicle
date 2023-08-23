@@ -1,16 +1,16 @@
-use crate::types::{Key, Mode};
+use crate::types::Mode;
 
-use inputbot::handle_input_events;
+use inputbot::{KeybdKey, handle_input_events};
 use std::thread::{sleep, spawn, JoinHandle};
 use std::time::Duration;
 
 ///starts irreversible listening to the input bind for inputs, needs system level privileges.
 pub fn init_input(
     duration: Duration,
-    input: Key,
+    input: KeybdKey,
     mode: Mode,
     sequence: String,
-    toggle: Key,
+    toggle: KeybdKey,
 ) -> JoinHandle<()> {
     match mode {
         Mode::Hold => spawn(move || hold(input, toggle)),
@@ -19,17 +19,15 @@ pub fn init_input(
     }
 }
 
-fn hold(input: Key, toggle: Key) {
-    
-
+fn hold(input: KeybdKey, toggle: KeybdKey) {
     handle_input_events();
 }
 
-fn press(duration: Duration, input: Key, toggle: Key) {
+fn press(duration: Duration, input: KeybdKey, toggle: KeybdKey) {
     sleep(duration);
     handle_input_events();
 }
 
-fn key_sequence(duration: Duration, input: Key, sequence: String, toggle: Key) {
+fn key_sequence(duration: Duration, input: KeybdKey, sequence: String, toggle: KeybdKey) {
     todo!()
 }
