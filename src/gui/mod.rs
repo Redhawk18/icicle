@@ -1,5 +1,5 @@
 mod widgets;
-use crate::input::init_input;
+use crate::input::start_input;
 use crate::types::*;
 use widgets::{button::button, tabs::tabs};
 
@@ -24,6 +24,7 @@ pub enum Message {
 
     //button
     Submit,
+    Stop,
 
     //number input
     Interval(u64),
@@ -77,7 +78,7 @@ impl Application for Icicle {
                     Time::Mircoseconds => self.duration = Duration::from_micros(self.interval),
                     Time::Nanoseconds => self.duration = Duration::from_nanos(self.interval),
                 }
-                init_input(
+                start_input(
                     self.duration,
                     self.input,
                     self.mode,
@@ -85,6 +86,7 @@ impl Application for Icicle {
                     self.toggle,
                 );
             }
+            Message::Stop => inputbot::stop_handling_input_events(),
 
             Message::Interval(interval) => self.interval = interval,
 
@@ -100,12 +102,15 @@ impl Application for Icicle {
     }
 
     fn view(&self) -> Element<Message> {
-        column!(
+        let mut c = column!(
             tabs(self.mode, self.interval, self.sequence.as_str()),
             button(),
         )
-        .spacing(30.0)
-        .into()
+        .spacing(30.0);
+
+        c = c.push(iced::widget::button("STOP EVENT").on_press(Message::Stop));
+
+        c.into()
     }
 
     fn theme(&self) -> Self::Theme {
