@@ -9,7 +9,7 @@ use widgets::{
 use iced::{
     font,
     widget::{column, container, row},
-    Application, Command, Element, Length,
+    Alignment, Application, Command, Element, Length,
 };
 use inputbot::KeybdKey;
 use std::time::Duration;
@@ -71,7 +71,15 @@ impl Application for Icicle {
     }
 
     fn title(&self) -> String {
-        String::from("Icile")
+        if self.active {
+            String::from(match self.mode {
+                Mode::Hold => format!("Toggle {} to hold {}", self.toggle, self.input),
+                Mode::Press => format!("Toggle {} to press {} every {:?}", self.toggle, self.input, self.duration),
+                Mode::Sequence => format!("Toggle {} to send a sequence of {} every {:?}", self.toggle, self.sequence, self.duration),
+            })
+        } else {
+            String::from("Icile")
+        }
     }
 
     fn update(&mut self, message: Message) -> iced::Command<Message> {
@@ -118,7 +126,7 @@ impl Application for Icicle {
 
         let c1 = column!().width(Length::Fill);
 
-        let mut c2 = column!().width(100).align_items(iced::Alignment::End);
+        let mut c2 = column!().width(100).align_items(Alignment::End);
 
         if self.active {
             if cfg!(target_os = "linux") {
@@ -130,7 +138,7 @@ impl Application for Icicle {
 
         let r2 = row![c1, c2]
             .height(Length::Fill)
-            .align_items(iced::Alignment::End);
+            .align_items(Alignment::End);
 
         let content = column!(r1, r2);
         container(content)
@@ -143,17 +151,5 @@ impl Application for Icicle {
 
     fn theme(&self) -> Self::Theme {
         Self::Theme::default()
-    }
-
-    fn style(&self) -> <Self::Theme as iced::application::StyleSheet>::Style {
-        <Self::Theme as iced::application::StyleSheet>::Style::default()
-    }
-
-    fn subscription(&self) -> iced::Subscription<Self::Message> {
-        iced::Subscription::none()
-    }
-
-    fn scale_factor(&self) -> f64 {
-        1.0
     }
 }
