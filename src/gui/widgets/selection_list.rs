@@ -1,9 +1,10 @@
-use crate::gui::widgets::number_input::number_input;
-use crate::gui::Message;
+use crate::gui::{widgets::number_input::number_input, Message};
 use crate::types::Time;
 
-use iced::widget::{column, row, text, Column, Row};
-use iced::{Alignment, Length};
+use iced::{
+    widget::{column, row, text, Column, Row},
+    Alignment, Length,
+};
 use iced_aw::SelectionList;
 use inputbot::KeybdKey;
 

@@ -5,8 +5,10 @@ use crate::gui::widgets::{
 use crate::gui::Message;
 use crate::types::Mode;
 
-use iced::widget::{column, row};
-use iced::Element;
+use iced::{
+    widget::{column, row},
+    Element,
+};
 use iced_aw::{TabLabel, Tabs};
 
 pub fn tabs(input: Mode, interval: u64, sequence: &str) -> Tabs<'static, Message, Mode> {

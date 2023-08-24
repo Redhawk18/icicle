@@ -6,8 +6,11 @@ use widgets::{
     tabs::tabs,
 };
 
-use iced::widget::column;
-use iced::{font, Application, Command, Element};
+use iced::{
+    font,
+    widget::{column, container, row},
+    Application, Command, Element, Length,
+};
 use inputbot::KeybdKey;
 use std::time::Duration;
 
@@ -111,18 +114,31 @@ impl Application for Icicle {
     }
 
     fn view(&self) -> Element<Message> {
-        let mut c = column!(tabs(self.mode, self.interval, self.sequence.as_str())).spacing(30.0);
+        let r1 = row!(tabs(self.mode, self.interval, self.sequence.as_str())).spacing(30.0);
+
+        let c1 = column!().width(Length::Fill);
+
+        let mut c2 = column!().width(100).align_items(iced::Alignment::End);
 
         if self.active {
             if cfg!(target_os = "linux") {
-                c = c.push(stop())
-            }    
-            
+                c2 = c2.push(stop())
+            }
         } else {
-            c = c.push(start())
+            c2 = c2.push(start())
         }
 
-        c.into()
+        let r2 = row![c1, c2]
+            .height(Length::Fill)
+            .align_items(iced::Alignment::End);
+
+        let content = column!(r1, r2);
+        container(content)
+            .width(Length::Fill)
+            .height(Length::Fill)
+            .center_x()
+            .center_y()
+            .into()
     }
 
     fn theme(&self) -> Self::Theme {
