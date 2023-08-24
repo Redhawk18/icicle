@@ -1,7 +1,10 @@
 mod widgets;
-use crate::input::{start_input, end_input};
-use crate::types::*;
-use widgets::{button::button, tabs::tabs};
+use crate::input::{end_input, start_input};
+use crate::types::{Mode, Time};
+use widgets::{
+    button::{start, stop},
+    tabs::tabs,
+};
 
 use iced::widget::column;
 use iced::{font, Application, Command, Element};
@@ -9,6 +12,7 @@ use inputbot::KeybdKey;
 use std::time::Duration;
 
 pub struct Icicle {
+    active: bool,
     duration: Duration,
     input: KeybdKey,
     interval: u64,
@@ -50,6 +54,7 @@ impl Application for Icicle {
     fn new(_flags: Self::Flags) -> (Self, Command<Self::Message>) {
         (
             Self {
+                active: false,
                 duration: Duration::default(),
                 mode: Mode::default(),
                 input: KeybdKey::WKey,
@@ -85,8 +90,12 @@ impl Application for Icicle {
                     self.sequence.clone(),
                     self.toggle,
                 );
+                self.active = true;
             }
-            Message::Stop => end_input(),
+            Message::Stop => {
+                end_input();
+                self.active = false;
+            }
 
             Message::Interval(interval) => self.interval = interval,
 
@@ -102,13 +111,14 @@ impl Application for Icicle {
     }
 
     fn view(&self) -> Element<Message> {
-        let mut c = column!(
-            tabs(self.mode, self.interval, self.sequence.as_str()),
-            button(),
-        )
-        .spacing(30.0);
+        let mut c = column!(tabs(self.mode, self.interval, self.sequence.as_str())).spacing(30.0);
 
-        c = c.push(iced::widget::button("STOP EVENT").on_press(Message::Stop));
+        if self.active {
+            #[cfg(target_os = "linux")]
+            c = c.push(stop())
+        } else {
+            c = c.push(start())
+        }
 
         c.into()
     }

@@ -2,7 +2,7 @@ use crate::types::Mode;
 
 #[cfg(target_os = "linux")]
 use inputbot::stop_handling_input_events;
-use inputbot::{handle_input_events, KeybdKey, KeySequence};
+use inputbot::{handle_input_events, KeySequence, KeybdKey};
 use std::thread::{sleep, spawn, JoinHandle};
 use std::time::Duration;
 
