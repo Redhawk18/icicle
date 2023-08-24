@@ -114,10 +114,10 @@ impl Application for Icicle {
         let mut c = column!(tabs(self.mode, self.interval, self.sequence.as_str())).spacing(30.0);
 
         if self.active {
-            #[cfg(target_os = "linux")]
-            {
+            if cfg!(target_os = "linux") {
                 c = c.push(stop())
-            }
+            }    
+            
         } else {
             c = c.push(start())
         }
