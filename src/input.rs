@@ -1,4 +1,4 @@
-use crate::types::Mode;
+use crate::types::{Input, Mode};
 
 #[cfg(target_os = "linux")]
 use inputbot::stop_handling_input_events;
@@ -6,10 +6,10 @@ use inputbot::{handle_input_events, KeySequence, KeybdKey};
 use std::thread::{sleep, spawn, JoinHandle};
 use std::time::Duration;
 
-///starts irreversible listening to the input bind for inputs, needs system level privileges.
+/// Starts the input thread based on parmeters.
 pub fn start_input(
     duration: Duration,
-    input: KeybdKey,
+    input: Input,
     mode: Mode,
     sequence: String,
     toggle: KeybdKey,
@@ -26,22 +26,36 @@ pub fn end_input() {
     stop_handling_input_events()
 }
 
-fn hold(input: KeybdKey, toggle: KeybdKey) {
+fn hold(input: Input, toggle: KeybdKey) {
     toggle.bind(move || {
         while toggle.is_toggled() {
-            input.press();
+            match input {
+                Input::Keyboard(k) => k.press(),
+                Input::Mouse(m) => m.press(),
+            }
         }
-        input.release();
+        match input {
+            Input::Keyboard(k) => k.release(),
+            Input::Mouse(m) => m.release(),
+        }
     });
 
     handle_input_events();
 }
 
-fn press(duration: Duration, input: KeybdKey, toggle: KeybdKey) {
+fn press(duration: Duration, input: Input, toggle: KeybdKey) {
     toggle.bind(move || {
         while toggle.is_toggled() {
-            input.press();
-            input.release();
+            match input {
+                Input::Keyboard(k) => {
+                    k.press();
+                    k.release();
+                }
+                Input::Mouse(m) => {
+                    m.press();
+                    m.release();
+                }
+            }
             sleep(duration);
         }
     });

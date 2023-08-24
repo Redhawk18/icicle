@@ -1,3 +1,21 @@
+use inputbot::{KeybdKey, MouseButton};
+use std::fmt::{Display, Formatter, Result};
+
+#[derive(Debug, Clone, Copy, Eq, Hash, PartialEq)]
+pub enum Input {
+    Keyboard(KeybdKey),
+    Mouse(MouseButton),
+}
+
+impl Display for Input {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        match self {
+            Input::Keyboard(k) => write!(f, "{}", k),
+            Input::Mouse(m) => write!(f, "{}", m),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, Default, Eq, PartialEq)]
 pub enum Mode {
     #[default]
@@ -16,7 +34,7 @@ pub enum Time {
     Nanoseconds,
 }
 
-impl std::fmt::Display for Time {
+impl Display for Time {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,

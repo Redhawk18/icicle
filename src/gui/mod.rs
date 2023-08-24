@@ -1,6 +1,6 @@
 mod widgets;
 use crate::input::{end_input, start_input};
-use crate::types::{Mode, Time};
+use crate::types::{Input, Mode, Time};
 use widgets::{
     button::{start, stop},
     tabs::tabs,
@@ -11,13 +11,13 @@ use iced::{
     widget::{column, container, row},
     Alignment, Application, Command, Element, Length,
 };
-use inputbot::KeybdKey;
+use inputbot::{KeybdKey, MouseButton};
 use std::time::Duration;
 
 pub struct Icicle {
     active: bool,
     duration: Duration,
-    input: KeybdKey,
+    input: Input,
     interval: u64,
     mode: Mode,
     sequence: String,
@@ -37,7 +37,7 @@ pub enum Message {
     Interval(u64),
 
     //selection list
-    KeyInput(usize, KeybdKey),
+    KeyInput(usize, Input),
     KeyToggle(usize, KeybdKey),
     Unit(usize, Time),
 
@@ -60,7 +60,7 @@ impl Application for Icicle {
                 active: false,
                 duration: Duration::default(),
                 mode: Mode::default(),
-                input: KeybdKey::WKey,
+                input: Input::Mouse(MouseButton::LeftButton),
                 interval: 0,
                 sequence: String::default(),
                 toggle: KeybdKey::CapsLockKey,
@@ -74,8 +74,14 @@ impl Application for Icicle {
         if self.active {
             String::from(match self.mode {
                 Mode::Hold => format!("Toggle '{}' to hold '{}' - Icile", self.toggle, self.input),
-                Mode::Press => format!("Toggle '{}' to press '{}' every {:?} - Icile", self.toggle, self.input, self.duration),
-                Mode::Sequence => format!("Toggle '{}' to send a sequence of {} every {:?} - Icile", self.toggle, self.sequence, self.duration),
+                Mode::Press => format!(
+                    "Toggle '{}' to press '{}' every {:?} - Icile",
+                    self.toggle, self.input, self.duration
+                ),
+                Mode::Sequence => format!(
+                    "Toggle '{}' to send a sequence of {} every {:?} - Icile",
+                    self.toggle, self.sequence, self.duration
+                ),
             })
         } else {
             String::from("Icile")
@@ -110,7 +116,10 @@ impl Application for Icicle {
 
             Message::Interval(interval) => self.interval = interval,
 
-            Message::KeyInput(_, key) => self.input = key,
+            Message::KeyInput(_, input) => match input {
+                Input::Keyboard(k) => self.input = Input::Keyboard(k),
+                Input::Mouse(m) => self.input = Input::Mouse(m),
+            },
             Message::KeyToggle(_, key) => self.toggle = key,
             Message::Unit(_, unit) => self.unit = unit,
 
