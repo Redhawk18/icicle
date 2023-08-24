@@ -115,7 +115,9 @@ impl Application for Icicle {
 
         if self.active {
             #[cfg(target_os = "linux")]
-            c = c.push(stop())
+            {
+                c = c.push(stop())
+            }
         } else {
             c = c.push(start())
         }
