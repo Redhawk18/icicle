@@ -73,9 +73,9 @@ impl Application for Icicle {
     fn title(&self) -> String {
         if self.active {
             String::from(match self.mode {
-                Mode::Hold => format!("Toggle {} to hold {}", self.toggle, self.input),
-                Mode::Press => format!("Toggle {} to press {} every {:?}", self.toggle, self.input, self.duration),
-                Mode::Sequence => format!("Toggle {} to send a sequence of {} every {:?}", self.toggle, self.sequence, self.duration),
+                Mode::Hold => format!("Toggle '{}' to hold '{}' - Icile", self.toggle, self.input),
+                Mode::Press => format!("Toggle '{}' to press '{}' every {:?} - Icile", self.toggle, self.input, self.duration),
+                Mode::Sequence => format!("Toggle '{}' to send a sequence of {} every {:?} - Icile", self.toggle, self.sequence, self.duration),
             })
         } else {
             String::from("Icile")
