@@ -147,7 +147,7 @@ fn selection_key_input() -> Column<'static, Message> {
     )
 }
 
-fn selection_key_toggle() -> Column<'static, Message> {
+pub fn selection_key_toggle() -> Column<'static, Message> {
     column!(
         text("Toggle Key:"),
         SelectionList::new(

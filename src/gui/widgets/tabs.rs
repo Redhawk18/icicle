@@ -1,5 +1,5 @@
 use crate::gui::widgets::{
-    selection_list::{selection_keys, selection_time},
+    selection_list::{selection_key_toggle, selection_keys, selection_time},
     text_input::text_input,
 };
 use crate::gui::Message;
@@ -38,7 +38,7 @@ fn body(input: Mode, interval: u64, sequence: &str) -> Element<'static, Message>
             .spacing(70.0)
             .into(),
         Mode::Sequence => column!(
-            row!(selection_keys(), selection_time(interval)).spacing(70.0),
+            row!(selection_key_toggle(), selection_time(interval)).spacing(185.0),
             text_input(sequence)
         )
         .spacing(20.0)
