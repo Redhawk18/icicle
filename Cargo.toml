@@ -9,4 +9,4 @@ edition = "2021"
 dark-light = "1.0.0"
 iced = "0.10.0"
 iced_aw = { git = "https://github.com/Redhawk18/iced_aw.git", rev = "280231a", default-features = false, features = ["tabs", "number_input", "selection_list"] }
-inputbot = { git = "https://github.com/Redhawk18/InputBot" }
+inputbot = { git = "https://github.com/Redhawk18/InputBot", rev = "7b3c399" }
