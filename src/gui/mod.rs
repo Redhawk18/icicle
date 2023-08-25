@@ -6,10 +6,11 @@ use widgets::{
     tabs::tabs,
 };
 
+use dark_light::detect;
 use iced::{
     font,
     widget::{column, container, row},
-    Alignment, Application, Command, Element, Length,
+    Alignment, Application, Command, Element, Length, Theme,
 };
 use inputbot::{KeybdKey, MouseButton};
 use std::time::Duration;
@@ -72,7 +73,7 @@ impl Application for Icicle {
 
     fn title(&self) -> String {
         if self.active {
-            String::from(match self.mode {
+            match self.mode {
                 Mode::Hold => format!("Toggle '{}' to hold '{}' - Icile", self.toggle, self.input),
                 Mode::Press => format!(
                     "Toggle '{}' to press '{}' every {:?} - Icile",
@@ -82,7 +83,7 @@ impl Application for Icicle {
                     "Toggle '{}' to send a sequence of {} every {:?} - Icile",
                     self.toggle, self.sequence, self.duration
                 ),
-            })
+            }
         } else {
             String::from("Icile")
         }
@@ -158,7 +159,10 @@ impl Application for Icicle {
             .into()
     }
 
-    fn theme(&self) -> Self::Theme {
-        Self::Theme::default()
+    fn theme(&self) -> Theme {
+        match detect() {
+            dark_light::Mode::Light | dark_light::Mode::Default => Theme::Light,
+            dark_light::Mode::Dark => Theme::Dark,
+        }
     }
 }
