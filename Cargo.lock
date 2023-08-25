@@ -1455,7 +1455,7 @@ dependencies = [
 [[package]]
 name = "inputbot"
 version = "0.6.0"
-source = "git+https://github.com/Redhawk18/InputBot#690b7d000cec9eb2bf67108edc2f7c149e54028c"
+source = "git+https://github.com/Redhawk18/InputBot?rev=7b3c399#7b3c399bd86aef87ea372f79609df4af066aa046"
 dependencies = [
  "input",
  "libc",

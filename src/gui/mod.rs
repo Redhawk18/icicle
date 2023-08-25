@@ -136,7 +136,7 @@ impl Application for Icicle {
 
         let c1 = column!().width(Length::Fill);
 
-        let mut c2 = column!().width(100).align_items(Alignment::End);
+        let mut c2 = column!().width(100).align_items(Alignment::End).padding(5.0);
 
         if self.active {
             if cfg!(target_os = "linux") {
